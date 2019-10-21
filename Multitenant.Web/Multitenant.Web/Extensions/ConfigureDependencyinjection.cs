@@ -6,7 +6,7 @@ namespace Multitenant.Web.Extensions
 {
     public static class ConfigureDependencyinjection
     {
-        public static void ConfigureServices(this IServiceCollection services, string connectionTemplate) {           
+        public static void ConfigureServices(this IServiceCollection services) {           
             services.AddScoped<ICustomerRepository, CustomerRepository>();
             services.AddScoped<IDbContextFactory, DbContextFactory>();
         }
