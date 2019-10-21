@@ -32,7 +32,7 @@ namespace Multitenant.Web
                 options.MinimumSameSitePolicy = SameSiteMode.None;
             });
 
-
+            services.ConfigureMultitenant();
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_2);
 
             services.ConfigureServices(Configuration.GetConnectionString("connectionTemplate"));
@@ -51,17 +51,16 @@ namespace Multitenant.Web
                 // The default HSTS value is 30 days. You may want to change this for production scenarios, see https://aka.ms/aspnetcore-hsts.
                 app.UseHsts();
             }
-
-            app.UseTenant();
-            app.UseHttpsRedirection();
             app.UseStaticFiles();
+            app.UseMultitenantTenant();
+            app.UseHttpsRedirection();           
             app.UseCookiePolicy();
 
             app.UseMvc(routes =>
             {
                 routes.MapRoute(
                     name: "default",
-                    template: "{tenant}/{controller=Home}/{action=Index}/{id?}");
+                    template: "{controller=Home}/{action=Index}/{id?}");
             });
         }
     }

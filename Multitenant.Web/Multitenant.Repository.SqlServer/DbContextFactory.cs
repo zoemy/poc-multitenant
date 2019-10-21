@@ -4,24 +4,18 @@ namespace Multitenant.Repository.SqlServer
 {
     public class DbContextFactory : IDbContextFactory
     {
-        private string connectionStringTemplate;
+        public string TenantConnection { get; set; }
 
-        public string TenantName { get; set; }
-
-        public DbContextFactory(string connectionStringTemplate)
-        {
-            this.connectionStringTemplate = connectionStringTemplate;
-        }
+        public DbContextFactory() { }
 
         public CRMContext Create()
         {
             CRMContext context = null;
 
-            if (!string.IsNullOrWhiteSpace(this.TenantName))
+            if (!string.IsNullOrWhiteSpace(TenantConnection))
             {
                 var dbContextOptionsBuilder = new DbContextOptionsBuilder();
-                dbContextOptionsBuilder.UseSqlServer(this.connectionStringTemplate.Replace("{tenant}", this.TenantName));
-
+                dbContextOptionsBuilder.UseSqlServer(TenantConnection);
                 context = new CRMContext(dbContextOptionsBuilder.Options);
             }
 

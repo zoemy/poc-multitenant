@@ -2,7 +2,7 @@
 {
     public interface IDbContextFactory
     {
-        string TenantName { get; set; }
+        string TenantConnection { get; set; }
 
         CRMContext Create();
     }
