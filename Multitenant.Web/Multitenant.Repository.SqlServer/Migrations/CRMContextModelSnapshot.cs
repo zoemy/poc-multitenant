@@ -8,7 +8,7 @@ using Multitenant.Repository.SqlServer;
 
 namespace Multitenant.Repository.SqlServer.Migrations
 {
-    [DbContext(typeof(CRMContext))]
+    [DbContext(typeof(SampleContext))]
     partial class CRMContextModelSnapshot : ModelSnapshot
     {
         protected override void BuildModel(ModelBuilder modelBuilder)

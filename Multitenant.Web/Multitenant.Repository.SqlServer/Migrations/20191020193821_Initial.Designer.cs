@@ -9,7 +9,7 @@ using Multitenant.Repository.SqlServer;
 
 namespace Multitenant.Repository.SqlServer.Migrations
 {
-    [DbContext(typeof(CRMContext))]
+    [DbContext(typeof(SampleContext))]
     [Migration("20191020193821_Initial")]
     partial class Initial
     {

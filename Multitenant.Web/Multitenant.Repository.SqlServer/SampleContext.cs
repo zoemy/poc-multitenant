@@ -1,28 +1,24 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using Finbuckle.MultiTenant;
+using Microsoft.EntityFrameworkCore;
 using Multitenant.Models;
 
 namespace Multitenant.Repository.SqlServer
 {
-    public class CRMContext : DbContext
-    {
-        private DbContextOptions contextOptions;
-
-        public CRMContext()
-            : base()
-        {
-        }
-
-        public CRMContext(DbContextOptions options)
-            : base(options)
-        {
-            this.contextOptions = options;
-        }
+    public class SampleContext : MultiTenantDbContext
+    { 
+        public SampleContext(TenantInfo tenantInfo) : base(tenantInfo) { }
+        public SampleContext(TenantInfo tenantInfo, DbContextOptions<SampleContext> options) : base(tenantInfo, options) {  }
 
         public DbSet<Customer> Customers { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             modelBuilder.Entity<Customer>().HasKey(e => e.CustomerId);
+        }
+
+        protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
+        {
+            optionsBuilder.UseSqlServer(ConnectionString);
         }
 
         //Uncomment to create database

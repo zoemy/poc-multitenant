@@ -4,12 +4,10 @@ namespace Multitenant.Models
 {
     public class Customer
     {
-        public Guid CustomerId { get; set; }
-
+        public int CustomerId { get; set; }
         public string Name { get; set; }
-
-        public DateTime RegistrationDate { get; set; }
-
-        public string Website { get; set; }
+        public string Address { get; set; }
+        public string PhoneNumber { get; set; }
+        public DateTime DateOfBirth { get; set; }
     }
 }

@@ -2,7 +2,6 @@
 using Microsoft.AspNetCore.Builder;
 using Microsoft.Extensions.DependencyInjection;
 using Multitenant.Repository.SqlServer;
-using Multitenant.Web.Middleware;
 using System;
 
 namespace Multitenant.Web.Extensions
@@ -13,12 +12,12 @@ namespace Multitenant.Web.Extensions
         {
             services.AddMultiTenant()
                     .WithEFCoreStore<AppDbContext, AppTenantInfo>()
-                    .WithStaticStrategy("ddmo");
+                    .WithStaticStrategy("tenant-a");
+            services.AddDbContext<SampleContext>();
         }
         public static void UseMultitenantTenant(this IApplicationBuilder app)
         {
             app.UseMultiTenant();
-            app.UseMiddleware<TenantMiddleware>();
             SetupStore(app.ApplicationServices);
         }
          
@@ -27,8 +26,8 @@ namespace Multitenant.Web.Extensions
             var scopeServices = serviceProvider.CreateScope().ServiceProvider;
             var store = scopeServices.GetRequiredService<IMultiTenantStore>();
 
-            store.TryAddAsync(new TenantInfo("tenant-finbuckle-d043favoiaw", "ddmo", "DDMO LLC", "Server=(localdb)\\mssqllocaldb;Database=TenantA;Trusted_Connection=True;MultipleActiveResultSets=true", null)).Wait();
-            store.TryAddAsync(new TenantInfo("tenant-initech-341ojadsfa", "skygen", "Skygen LLC", "Server=(localdb)\\mssqllocaldb;Database=TenantB;Trusted_Connection=True;MultipleActiveResultSets=true", null)).Wait();
+            store.TryAddAsync(new TenantInfo("tenant-a-d043favoiaw", "tenant-a", "Tenant LLC", "Server=(localdb)\\mssqllocaldb;Database=TenantA;Trusted_Connection=True;MultipleActiveResultSets=true", null)).Wait();
+            store.TryAddAsync(new TenantInfo("tenant-b-341ojadsfa", "tenant-b", "Tenant LLC", "Server=(localdb)\\mssqllocaldb;Database=TenantB;Trusted_Connection=True;MultipleActiveResultSets=true", null)).Wait();
         }
     }
 }

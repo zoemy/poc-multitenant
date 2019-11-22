@@ -6,16 +6,15 @@ namespace Multitenant.Repository.SqlServer
 {
     public class CustomerRepository : ICustomerRepository
     {
-        private CRMContext context;
+        private readonly SampleContext _context;
 
-        public CustomerRepository(IDbContextFactory dbContextFactory)
-        {
-            this.context = dbContextFactory.Create();
+        public CustomerRepository(SampleContext context) {
+            _context = context;
         }
 
         public List<Customer> GetAllCustomers()
         {
-            return this.context?.Customers.ToList();
+            return _context.Customers.ToList();
         }
     }
 }
